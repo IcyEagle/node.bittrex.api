@@ -25,17 +25,18 @@ var NodeBittrexApi = function() {
             }
         };
 
+    var getNonce = function() {
+        return Math.floor(new Date().getTime() / 1000);
+    };
+
     var opts = {
         baseUrl: 'https://bittrex.com/api/v1.1',
         apikey: 'APIKEY',
         apisecret: 'APISECRET',
         verbose: false,
         cleartext: false,
-        stream: false
-    };
-
-    var getNonce = function() {
-        return Math.floor(new Date().getTime() / 1000);
+        stream: false,
+        nonce: getNonce
     };
 
     var extractOptions = function(options) {
@@ -51,7 +52,7 @@ var NodeBittrexApi = function() {
 
         var options = {
             apikey: opts.apikey,
-            nonce: getNonce()
+            nonce: opts.nonce()
         };
 
         return setRequestUriGetParams(uri, options);
